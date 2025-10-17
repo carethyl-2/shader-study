@@ -627,7 +627,7 @@ MonoBehaviour:
   m_rigidbody: {fileID: 9120140933587713957}
   m_speed: 5
   m_isGrounded: 0
-  m_footstepTimeThreshold: 0.3
+  m_footstepTimeThreshold: 0.1
   m_footstepEvent:
     m_PersistentCalls:
       m_Calls:
