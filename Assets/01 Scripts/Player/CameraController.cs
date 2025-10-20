@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     public float m_horizontalSensitivity = 5.0f;
 
     [Header("Interactable Raycast")]
-    [SerializeField] float INTERACT_RANGE = 3.0f;
+    [SerializeField] float m_interactionRange = 3.0f;
     public bool m_canInteract = true;
     [SerializeField] IInteractable m_focusedInteractable;
 
@@ -81,10 +81,10 @@ public class CameraController : MonoBehaviour
         }
 
         // Draw interact ray
-        Debug.DrawRay(transform.position, transform.forward * INTERACT_RANGE, Color.red);
+        Debug.DrawRay(transform.position, transform.forward * m_interactionRange, Color.red);
 
         // Perform raycast
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, INTERACT_RANGE))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, m_interactionRange))
         {
             // If object being looked at is interactable
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactableObject))

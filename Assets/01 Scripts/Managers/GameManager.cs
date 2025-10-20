@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     #region Singleton
     public static GameManager Instance;
 
+    bool lowResolutionEnabled = true;
+    [SerializeField] RenderTexture lowResolutionRenderTexture;
+    [SerializeField] GameObject lowResRawImageUIElement;
+
     /// <summary>
     /// Called once before Start
     /// </summary>
@@ -37,6 +41,33 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Runs every frame.
     /// </summary>
-    void Update() {}
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ToggleLowResolution();
+        }
+
+    }
+    
+    public void ToggleLowResolution()
+    {
+        lowResolutionEnabled = !lowResolutionEnabled;
+
+        if (lowResolutionEnabled)
+        {
+
+            Camera.main.targetTexture = lowResolutionRenderTexture;
+            lowResRawImageUIElement.SetActive(true);
+            TextPrompt.Instance.SetTextPrompt("Low Resolution: Enabled");
+        }
+
+        else
+        {
+            Camera.main.targetTexture = null;
+            lowResRawImageUIElement.SetActive(false);
+            TextPrompt.Instance.SetTextPrompt("Low Resolution: Disabled");
+        }
+    }
 
 }

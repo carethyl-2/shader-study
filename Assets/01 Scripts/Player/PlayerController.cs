@@ -21,6 +21,17 @@ public class PlayerController : MonoBehaviour
     public UnityEvent m_jumpEvent;
     public UnityEvent<Vector3> m_landEvent;
 
+    [Header("Noclip")]
+    [SerializeField] Collider capsuleCollider;
+
+    public enum MovementMode
+    {
+        FirstPerson,
+        NoClip
+    }
+
+    public MovementMode movementMode = MovementMode.FirstPerson;
+
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -28,6 +39,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMovementMode();
+        }
+
         // Move player
         Move();
 
@@ -58,13 +74,23 @@ public class PlayerController : MonoBehaviour
         // Normalize velocities and scale by speed
         Vector3 targetXZVelocity = (forwardTargetVelocity + sidewaysTargetVelocity).normalized * m_speed;
 
-        // Assign velocity
-        float controlFactor = m_isGrounded ? 1.0f : 0.25f;
-        m_velocity = Vector3.Lerp(m_velocity, targetXZVelocity, Time.deltaTime * 4.0f * controlFactor);
-        m_rigidbody.linearVelocity = new Vector3(m_velocity.x, m_rigidbody.linearVelocity.y, m_velocity.z);
 
-        // Effects
-        FootstepSFX();
+
+        if (movementMode == MovementMode.NoClip)
+        {
+            m_rigidbody.linearVelocity = new Vector3(targetXZVelocity.x, NoclipFlightInput() * m_speed, targetXZVelocity.z);
+        }
+
+        if (movementMode == MovementMode.FirstPerson)
+        {
+            // Assign velocity
+            float controlFactor = m_isGrounded ? 1.0f : 0.25f;
+            m_velocity = Vector3.Lerp(m_velocity, targetXZVelocity, Time.deltaTime * 4.0f * controlFactor);
+            m_rigidbody.linearVelocity = new Vector3(m_velocity.x, m_rigidbody.linearVelocity.y, m_velocity.z);
+
+            // Effects
+            FootstepSFX();
+        }
     }
 
     public void OnLanded(Vector3 _landingVelocity)
@@ -77,7 +103,7 @@ public class PlayerController : MonoBehaviour
         // Play no footstep sfx if not grounded
         if (!m_isGrounded) { return; }
 
-        m_footstepTimer -= m_rigidbody.linearVelocity.magnitude * m_footstepTimeScalar;
+        m_footstepTimer -= m_rigidbody.linearVelocity.magnitude * Time.deltaTime;
 
         // If footstep interval has passed
         if (m_footstepTimer <= 0.0f)
@@ -86,5 +112,41 @@ public class PlayerController : MonoBehaviour
             m_footstepTimer = m_footstepTimeThreshold;
             m_footstepEvent.Invoke();
         }
+    }
+
+    public void ToggleMovementMode()
+    {
+        switch (movementMode)
+        {
+            case MovementMode.FirstPerson:
+                movementMode = MovementMode.NoClip;
+                TextPrompt.Instance.SetTextPrompt("Mode: NoClip");
+                m_rigidbody.useGravity = false;
+                capsuleCollider.enabled = false;
+                break;
+            case MovementMode.NoClip:
+                movementMode = MovementMode.FirstPerson;
+                TextPrompt.Instance.SetTextPrompt("Mode: FirstPerson");
+                m_rigidbody.useGravity = true;
+                capsuleCollider.enabled = true;
+                break;
+
+            default:
+                break;
+        }
+    }
+    
+    float NoclipFlightInput()
+    {
+        float input = 0.0f;
+        if (Input.GetKey(KeyCode.Q))
+        {
+            input += 1.0f;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            input -= 1.0f;
+        }
+        return input;
     }
 }
