@@ -108,6 +108,22 @@ MonoBehaviour:
   writeDepthAlphaThreshold:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-7867811515377466714
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209528afbf688b647bbc66261782a9b2, type: 3}
+  m_Name: GrayScale
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-7694395225510778834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1162,6 +1178,7 @@ MonoBehaviour:
   - {fileID: -4730826803967366102}
   - {fileID: -8640734749490104487}
   - {fileID: -5711538745001160171}
+  - {fileID: -7867811515377466714}
 --- !u!114 &339858103118011409
 MonoBehaviour:
   m_ObjectHideFlags: 3

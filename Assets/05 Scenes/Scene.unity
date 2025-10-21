@@ -3836,6 +3836,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4072807826462250419, guid: 96c43f07ac67de94a87a5ecd0fc372d8, type: 3}
+      propertyPath: priority
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072807826462250419, guid: 96c43f07ac67de94a87a5ecd0fc372d8, type: 3}
+      propertyPath: m_IsGlobal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072807826462250419, guid: 96c43f07ac67de94a87a5ecd0fc372d8, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 05b5009fd8d617b4f8628798f2b911b3, type: 2}
     - target: {fileID: 6824606101365614573, guid: 96c43f07ac67de94a87a5ecd0fc372d8, type: 3}
       propertyPath: m_IsActive
       value: 1
