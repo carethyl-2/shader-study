@@ -184,18 +184,18 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": -210.00001525878907,
+            "y": 180.00006103515626,
+            "width": 191.00003051757813,
+            "height": 100.99996948242188
         }
     },
     "m_Slots": [
         {
-            "m_Id": "117baeb7c5014708bf3b494ce6f15065"
+            "m_Id": "5698e8a858bf4c2bbe6118a3e35770ac"
         },
         {
-            "m_Id": "199e834879f548c58c0edf715965ce61"
+            "m_Id": "c6a3bccd2c7c426f9f97b0f4a2d5d89a"
         }
     ],
     "synonyms": [],
@@ -229,46 +229,6 @@
         "y": 0.0,
         "z": 0.0
     },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "117baeb7c5014708bf3b494ce6f15065",
-    "m_Id": 1,
-    "m_DisplayName": "VertexInterpolation",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "VertexInterpolation",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "199e834879f548c58c0edf715965ce61",
-    "m_Id": 2,
-    "m_DisplayName": "Alpha",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Alpha",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
     "m_Labels": []
 }
 
@@ -353,8 +313,8 @@
     "m_Theme": 0,
     "m_Position": {
         "serializedVersion": "2",
-        "x": -273.0,
-        "y": -168.0,
+        "x": -497.0,
+        "y": 141.0,
         "width": 220.0,
         "height": 100.0
     },
@@ -369,6 +329,31 @@
     "m_ObjectId": "4f1abb10110b431b8a65d1a5c6551774",
     "m_Name": "",
     "m_ChildObjectList": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "5698e8a858bf4c2bbe6118a3e35770ac",
+    "m_Id": 1,
+    "m_DisplayName": "VertexInterpolationOutput",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "VertexInterpolationOutput",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -685,6 +670,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "c6a3bccd2c7c426f9f97b0f4a2d5d89a",
+    "m_Id": 2,
+    "m_DisplayName": "W",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "W",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {

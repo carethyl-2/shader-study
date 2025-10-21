@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     bool lowResolutionEnabled = true;
+    bool snapVertices = true;
+    bool affineTextureMapping = true;
+
     [SerializeField] RenderTexture lowResolutionRenderTexture;
     [SerializeField] GameObject lowResRawImageUIElement;
 
@@ -36,7 +39,17 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Execution begins here.
     /// </summary>
-    void Start() {}
+    void Start()
+    {
+
+        // Enable snap vertices
+        snapVertices = true;
+        Shader.SetGlobalInteger("_Snap_Vertices", snapVertices ? 1 : 0);
+
+        // Enable affine texture mapping
+        affineTextureMapping = true;
+        Shader.SetGlobalInteger("_Affine_Texture_Mapping", affineTextureMapping ? 1 : 0);
+    }
 
     /// <summary>
     /// Runs every frame.
@@ -48,8 +61,21 @@ public class GameManager : MonoBehaviour
             ToggleLowResolution();
         }
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            snapVertices = !snapVertices;
+            ToggleSnapVertices(snapVertices);
+        }
+
+        
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            affineTextureMapping = !affineTextureMapping;
+            ToggleAffineTextureMapping(affineTextureMapping);
+        }
+
     }
-    
+
     public void ToggleLowResolution()
     {
         lowResolutionEnabled = !lowResolutionEnabled;
@@ -70,4 +96,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void ToggleSnapVertices(bool _snapVertices)
+    {
+        Shader.SetGlobalInteger("_Snap_Vertices", _snapVertices ? 1 : 0);
+
+        Debug.Log("Set Snap Vertices: " + _snapVertices);
+        TextPrompt.Instance.SetTextPrompt("Vertex Snapping: " + (_snapVertices ? "Enabled" : "Disabled"));
+    }
+
+    
+    public void ToggleAffineTextureMapping(bool _affineTextureMapping)
+    {
+        Shader.SetGlobalInteger("_Affine_Texture_Mapping", _affineTextureMapping ? 1 : 0);
+
+        Debug.Log("Set Affine Texture Mapping: " + _affineTextureMapping);
+        TextPrompt.Instance.SetTextPrompt("Affine Texture Mapping: " + (_affineTextureMapping ? "Enabled" : "Disabled"));
+    }
 }
