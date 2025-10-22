@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     bool lowResolutionEnabled = true;
     bool snapVertices = true;
     bool affineTextureMapping = true;
+    bool dither = true;
 
     [SerializeField] RenderTexture lowResolutionRenderTexture;
     [SerializeField] GameObject lowResRawImageUIElement;
@@ -49,6 +50,9 @@ public class GameManager : MonoBehaviour
         // Enable affine texture mapping
         affineTextureMapping = true;
         Shader.SetGlobalInteger("_Affine_Texture_Mapping", affineTextureMapping ? 1 : 0);
+
+        dither = true;
+        Shader.SetGlobalInteger("_Dither", dither ? 1 : 0);
     }
 
     /// <summary>
@@ -56,24 +60,32 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Toggle low resolution
         if (Input.GetKeyDown(KeyCode.R))
         {
             ToggleLowResolution();
         }
 
+        // Toggle Vertex Snapping
         if (Input.GetKeyDown(KeyCode.T))
         {
             snapVertices = !snapVertices;
             ToggleSnapVertices(snapVertices);
         }
 
-        
+        // Toggle AFM
         if (Input.GetKeyDown(KeyCode.Y))
         {
             affineTextureMapping = !affineTextureMapping;
             ToggleAffineTextureMapping(affineTextureMapping);
         }
 
+        // Toggle Dithering
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            dither = !dither;
+            ToggleDither(dither);
+        }
     }
 
     public void ToggleLowResolution()
@@ -105,12 +117,20 @@ public class GameManager : MonoBehaviour
         TextPrompt.Instance.SetTextPrompt("Vertex Snapping: " + (_snapVertices ? "Enabled" : "Disabled"));
     }
 
-    
+
     public void ToggleAffineTextureMapping(bool _affineTextureMapping)
     {
         Shader.SetGlobalInteger("_Affine_Texture_Mapping", _affineTextureMapping ? 1 : 0);
 
         Debug.Log("Set Affine Texture Mapping: " + _affineTextureMapping);
         TextPrompt.Instance.SetTextPrompt("Affine Texture Mapping: " + (_affineTextureMapping ? "Enabled" : "Disabled"));
+    }
+    
+    public void ToggleDither(bool _dither)
+    {
+        Shader.SetGlobalInteger("_Dither", _dither ? 1 : 0);
+
+        Debug.Log("Set Dither: " + _dither);
+        TextPrompt.Instance.SetTextPrompt("Dither: " + (_dither ? "Enabled" : "Disabled"));
     }
 }
