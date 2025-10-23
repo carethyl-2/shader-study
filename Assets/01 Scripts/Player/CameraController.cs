@@ -19,24 +19,34 @@ public class CameraController : MonoBehaviour
     public bool m_canInteract = true;
     [SerializeField] IInteractable m_focusedInteractable;
 
+    public bool rotateCamera = true;
+
     private void Awake()
     {
         Instance = this;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void ToggleCameraRotation()
+    {
+        Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+
+        rotateCamera = !rotateCamera;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+            ToggleCameraRotation();
         }
 
         
         // Interaction
         InteractableCheck();
         if (Input.GetKeyDown(KeyCode.E)) { Interact(); }
-    
+
+        if (!rotateCamera) { return; }
         Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
 
 

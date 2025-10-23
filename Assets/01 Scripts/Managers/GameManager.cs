@@ -10,19 +10,22 @@ Author : Kieran Bishop
 Mail : kieran.bishop@mds.ac.nz
 */
 
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager Instance;
+    
 
     bool lowResolutionEnabled = true;
     bool snapVertices = true;
     bool affineTextureMapping = true;
     bool dither = true;
+    bool colorQuantization = true;
 
-    [SerializeField] RenderTexture highResolutionRenderTexture;
     [SerializeField] RenderTexture lowResolutionRenderTexture;
     [SerializeField] GameObject lowResRawImageUIElement;
 
@@ -37,6 +40,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     public GameObject audioPlayerPrefab;
+
+    public GameObject graphicsMenuUIObject;
+    public PlayerController playerController;
 
     /// <summary>
     /// Execution begins here.
@@ -61,6 +67,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Toggle graphics menu
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            graphicsMenuUIObject.SetActive(!graphicsMenuUIObject.activeSelf);
+            CameraController.Instance.ToggleCameraRotation();
+        }
+
+        /*
         // Toggle low resolution
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -87,6 +101,14 @@ public class GameManager : MonoBehaviour
             dither = !dither;
             ToggleDither(dither);
         }
+
+        // Toggle Color Quantization
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            colorQuantization = !colorQuantization;
+            ToggleColorQuantization(colorQuantization);
+        }
+        */
     }
 
     public void ToggleLowResolution()
@@ -111,33 +133,77 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void ToggleSnapVertices(bool _snapVertices)
+    public void ToggleSnapVertices()
     {
-        Shader.SetGlobalInteger("_Snap_Vertices", _snapVertices ? 1 : 0);
+        snapVertices = !snapVertices;
 
-        Debug.Log("Set Snap Vertices: " + _snapVertices);
-        TextPrompt.Instance.SetTextPrompt("Vertex Snapping: " + (_snapVertices ? "Enabled" : "Disabled"));
+        Shader.SetGlobalInteger("_Snap_Vertices", snapVertices ? 1 : 0);
+
+        Debug.Log("Set Snap Vertices: " + snapVertices);
+        TextPrompt.Instance.SetTextPrompt("Vertex Snapping: " + (snapVertices ? "Enabled" : "Disabled"));
     }
 
 
-    public void ToggleAffineTextureMapping(bool _affineTextureMapping)
+    public void ToggleAffineTextureMapping()
     {
-        Shader.SetGlobalInteger("_Affine_Texture_Mapping", _affineTextureMapping ? 1 : 0);
+        affineTextureMapping = !affineTextureMapping;
 
-        Debug.Log("Set Affine Texture Mapping: " + _affineTextureMapping);
-        TextPrompt.Instance.SetTextPrompt("Affine Texture Mapping: " + (_affineTextureMapping ? "Enabled" : "Disabled"));
+        Shader.SetGlobalInteger("_Affine_Texture_Mapping", affineTextureMapping ? 1 : 0);
+
+        Debug.Log("Set Affine Texture Mapping: " + affineTextureMapping);
+        TextPrompt.Instance.SetTextPrompt("Affine Texture Mapping: " + (affineTextureMapping ? "Enabled" : "Disabled"));
+    }
+
+    public void ToggleDither()
+    {
+        dither = !dither;
+
+        Shader.SetGlobalInteger("_Dither", dither ? 1 : 0);
+
+        Debug.Log("Set Dither: " + dither);
+        TextPrompt.Instance.SetTextPrompt("Dither: " + (dither ? "Enabled" : "Disabled"));
+    }
+
+    public void ToggleColorQuantization()
+    {
+        colorQuantization = !colorQuantization;
+
+        Shader.SetGlobalInteger("_Color_Quantization", colorQuantization ? 1 : 0);
+
+        Debug.Log("Set Color Quantization: " + colorQuantization);
+        TextPrompt.Instance.SetTextPrompt("Color Quantization: " + (colorQuantization ? "Enabled" : "Disabled"));
+    }
+
+    public void ToggleNoclip()
+    {
+        if (playerController) playerController.ToggleMovementMode();
+    }
+
+    public void TakeScreenshot()
+    {
+        StopAllCoroutines();
+        StartCoroutine(TakeScreenshotRoutine());
+    }
+
+    public void AdjustFOV(float _fovChange)
+    {
+        _fovChange *= Time.deltaTime;
+
+        Camera.main.fieldOfView += _fovChange;
+    }
+
+    public void SetFOV(float _fov)
+    {
+        Camera.main.fieldOfView = _fov;
     }
     
-    public void ToggleDither(bool _dither)
+    IEnumerator TakeScreenshotRoutine()
     {
-        if (!lowResolutionEnabled && _dither)
-        {
-            ToggleLowResolution();
-        }
+        graphicsMenuUIObject.SetActive(false);
+        ScreenCapture.CaptureScreenshot("Screenshot_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png");
 
-        Shader.SetGlobalInteger("_Dither", _dither ? 1 : 0);
-        Debug.Log("Set Dither: " + _dither);
-        TextPrompt.Instance.SetTextPrompt("Dither: " + (_dither ? "Enabled" : "Disabled"));
+        yield return new WaitForSeconds(0.1f);
 
+        graphicsMenuUIObject.SetActive(true);
     }
 }

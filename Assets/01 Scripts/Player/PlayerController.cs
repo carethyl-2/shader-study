@@ -37,13 +37,13 @@ public class PlayerController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        GameManager.Instance.playerController = this;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ToggleMovementMode();
-        }
-
         // Move player
         Move();
 
