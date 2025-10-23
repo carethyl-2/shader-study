@@ -46,7 +46,7 @@ Material:
     - _Affine_Texture_Mapping: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Tiling: 3
+    - _Tiling: 1
     - _Vertex_Snapping_Amount: 1
     m_Colors: []
   m_BuildTextureStacks: []

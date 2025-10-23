@@ -803,8 +803,8 @@
     "m_ObjectId": "2e0bff40cfd24a74b8495c6038d9b4a4",
     "m_Title": "Lerp remapped colour",
     "m_Position": {
-        "x": 254.0,
-        "y": -94.00006103515625
+        "x": 253.999755859375,
+        "y": -94.0
     }
 }
 
@@ -1059,8 +1059,8 @@
     "m_ObjectId": "56d0a1614bbd437199f237cae8e47467",
     "m_Title": "Possible Input colors",
     "m_Position": {
-        "x": -2311.0,
-        "y": -46.00006103515625
+        "x": -2310.999755859375,
+        "y": -46.0
     }
 }
 
@@ -1070,8 +1070,8 @@
     "m_ObjectId": "57c704f94b43456fab83cda4782d48b4",
     "m_Title": "Convert to Input color range",
     "m_Position": {
-        "x": -1420.0,
-        "y": -100.00006103515625
+        "x": -1419.9998779296875,
+        "y": -100.0
     }
 }
 
@@ -1458,8 +1458,8 @@
     "m_ObjectId": "889f413245e54a7d89478b6e2b1c3cf3",
     "m_Title": "Quantize Color",
     "m_Position": {
-        "x": -668.0,
-        "y": -59.00006103515625
+        "x": -667.999755859375,
+        "y": -59.0
     }
 }
 
@@ -2246,8 +2246,8 @@
     "m_ObjectId": "c945c37ca9ba4904bb350e1e7cb53bde",
     "m_Title": "Possible Output colors",
     "m_Position": {
-        "x": -2244.0,
-        "y": 275.00006103515627
+        "x": -2243.999755859375,
+        "y": 274.99993896484377
     }
 }
 
@@ -2462,8 +2462,8 @@
     "m_ObjectId": "f5859b0a70704c648c36f63c22f6146f",
     "m_Title": "Remap to Output color range",
     "m_Position": {
-        "x": -354.0,
-        "y": -55.00006103515625
+        "x": -353.9998779296875,
+        "y": -55.0
     }
 }
 

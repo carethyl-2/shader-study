@@ -200,10 +200,13 @@ public class GameManager : MonoBehaviour
     IEnumerator TakeScreenshotRoutine()
     {
         graphicsMenuUIObject.SetActive(false);
-        ScreenCapture.CaptureScreenshot("Screenshot_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png");
+        string screenshotSaveString = "Screenshot_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png";
+        ScreenCapture.CaptureScreenshot(screenshotSaveString);
 
         yield return new WaitForSeconds(0.1f);
 
         graphicsMenuUIObject.SetActive(true);
+
+        TextPrompt.Instance.SetTextPrompt("'" + screenshotSaveString + "' Saved to disk...");
     }
 }
