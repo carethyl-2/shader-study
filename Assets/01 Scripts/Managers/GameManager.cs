@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     bool affineTextureMapping = true;
     bool dither = true;
 
+    [SerializeField] RenderTexture highResolutionRenderTexture;
     [SerializeField] RenderTexture lowResolutionRenderTexture;
     [SerializeField] GameObject lowResRawImageUIElement;
 
@@ -94,9 +95,9 @@ public class GameManager : MonoBehaviour
 
         if (lowResolutionEnabled)
         {
-
             Camera.main.targetTexture = lowResolutionRenderTexture;
             lowResRawImageUIElement.SetActive(true);
+
             TextPrompt.Instance.SetTextPrompt("Low Resolution: Enabled");
         }
 
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
         {
             Camera.main.targetTexture = null;
             lowResRawImageUIElement.SetActive(false);
+            
             TextPrompt.Instance.SetTextPrompt("Low Resolution: Disabled");
         }
     }
@@ -128,9 +130,14 @@ public class GameManager : MonoBehaviour
     
     public void ToggleDither(bool _dither)
     {
-        Shader.SetGlobalInteger("_Dither", _dither ? 1 : 0);
+        if (!lowResolutionEnabled && _dither)
+        {
+            ToggleLowResolution();
+        }
 
+        Shader.SetGlobalInteger("_Dither", _dither ? 1 : 0);
         Debug.Log("Set Dither: " + _dither);
         TextPrompt.Instance.SetTextPrompt("Dither: " + (_dither ? "Enabled" : "Disabled"));
+
     }
 }
