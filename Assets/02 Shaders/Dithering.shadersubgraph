@@ -1935,7 +1935,7 @@
     "m_ObjectId": "6ac1be971d624f40bf44dcd5cbeec0c5",
     "m_Title": "Lerp Dithered image with raw image and output",
     "m_Position": {
-        "x": 984.0,
+        "x": 983.9995727539063,
         "y": -386.0
     }
 }
@@ -2359,8 +2359,8 @@
     "m_ObjectId": "8e8277202f95429f9228a95265c92e0b",
     "m_Title": "Tile Dither Matrix Texture across Render Texture",
     "m_Position": {
-        "x": -3111.0,
-        "y": -173.0
+        "x": -3111.000244140625,
+        "y": -173.0001220703125
     }
 }
 
@@ -3138,8 +3138,8 @@
     "m_ObjectId": "c337fda7958b4892997ddd9505838185",
     "m_Title": "Add Dither to Image",
     "m_Position": {
-        "x": -1341.9998779296875,
-        "y": -456.0
+        "x": -1342.0001220703125,
+        "y": -456.0001220703125
     }
 }
 

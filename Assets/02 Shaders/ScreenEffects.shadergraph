@@ -495,7 +495,7 @@
     "m_ObjectId": "17f30e3e3790483ba7bfe6e78bb82291",
     "m_Title": "Add Dithering",
     "m_Position": {
-        "x": 378.0000305175781,
+        "x": 378.0,
         "y": 435.0
     }
 }
@@ -507,7 +507,7 @@
     "m_Title": "Input Texture",
     "m_Position": {
         "x": 513.0,
-        "y": 939.9999389648438
+        "y": 940.0
     }
 }
 
@@ -1071,8 +1071,8 @@
     "m_ObjectId": "692caf82096a4e78bce9f309eb2b5e91",
     "m_Title": "Add Colour Quantization",
     "m_Position": {
-        "x": 1334.9998779296875,
-        "y": 434.9999084472656
+        "x": 1335.0,
+        "y": 435.0
     }
 }
 
