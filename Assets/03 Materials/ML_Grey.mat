@@ -28,6 +28,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 0105f81bf5b6dd249b6da5c5a8f9a730, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -46,6 +54,7 @@ Material:
     - _Affine_Texture_Mapping: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Smoothness: 0.5
     - _Tiling: 1
     - _Vertex_Snapping_Amount: 1
     m_Colors: []
