@@ -8,9 +8,11 @@
 #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
 #pragma multi_compile _ _CLUSTER_LIGHT_LOOP
 #pragma multi_compile _ _LIGHTMAP_SHADOW_MIXING
+#pragma multi_compile _ _SHADOWS_SHADOWMASK
 
 #ifndef SHADERGRAPH_PREVIEW
     #include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
     #if (SHADERPASS != SHADERPASS_FORWARD)
         #undef REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
     #endif
@@ -31,6 +33,8 @@ struct CustomLightingData
 
     // Baked Lighting
     float3 bakedGI;
+    float4 shadowMask;
+    float fogFactor;
 };
 
 float GetSmoothnessPower(float _rawSmoothness)
@@ -42,7 +46,15 @@ float GetSmoothnessPower(float _rawSmoothness)
 float3 CustomGlobalIllumination(CustomLightingData _data)
 {
     float3 indirectDiffuse = _data.albedo * _data.bakedGI * _data.ambientOcclusion;
-    return indirectDiffuse;
+    
+    float3 reflectVector = reflect(-_data.viewDirectionWorldSpace, _data.normalWorldSpace);
+    float fresnel = Pow4(1 - saturate(dot(_data.viewDirectionWorldSpace, _data.normalWorldSpace)));
+    
+    float3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, RoughnessToPerceptualRoughness(1 - _data.smoothness), _data.ambientOcclusion) * fresnel;
+    
+    
+    
+    return indirectDiffuse + indirectSpecular;
 }
 
 float3 CustomLightHandling(CustomLightingData _data, Light _light)
@@ -77,26 +89,41 @@ float3 CustomLighting(CustomLightingData _data)
     // Core functionality
 
     // Get main light
-    Light mainLight = GetMainLight(_data.shadowCoordinate, _data.positionWorldSpace, 1);
-
+    Light mainLight = GetMainLight(_data.shadowCoordinate, _data.positionWorldSpace, _data.shadowMask);
 
     // Initialize Color with global illumination
-    //MixRealtimeAndBakedGI(mainLight, _data.normalWorldSpace. _data.bakedGI);
-    //float3 color = CustomGlobalIllumination(_data);
-    float3 color = 0;
-    
+    MixRealtimeAndBakedGI(mainLight, _data.normalWorldSpace, _data.bakedGI);
+    float3 color = CustomGlobalIllumination(_data);
+
     // Shade the main light
     color += CustomLightHandling(_data, mainLight);
 
+    
+    // Shade all additional lights
+    
     #ifdef _ADDITIONAL_LIGHTS    
-        // Shade all additional lights
-        uint numAdditionalLights = GetAdditionalLightsCount();
+
+    uint numAdditionalLights = GetAdditionalLightsCount();
+    
+    #if USE_CLUSTER_LIGHT_LOOP
+        InputData inputData = (InputData)0;
+        inputData.positionWS = _data.positionWorldSpace;
+        
+        LIGHT_LOOP_BEGIN(numAdditionalLights)
+            Light additionalLight = GetAdditionalLight(lightIndex, _data.positionWorldSpace, _data.shadowMask);
+            color += CustomLightHandling(_data, additionalLight);
+        LIGHT_LOOP_END
+        
+        #endif
+    
         for (uint i = 0; i < numAdditionalLights; i++)
         {
-            Light light = GetAdditionalLight(i, _data.positionWorldSpace, 1);
+            Light light = GetAdditionalLight(i, _data.positionWorldSpace, _data.shadowMask);
             color += CustomLightHandling(_data, light);
         }
     #endif
+
+    color = MixFog(color, _data.fogFactor);
 
     // Return final color
     return color;
@@ -118,6 +145,8 @@ void CustomLighting_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, 
 #ifdef SHADERGRAPH_PREVIEW
     data.shadowCoordinate = 0;
     data.bakedGI = 0;
+    data.shadowMask = 0;
+    data.fogFactor = 0;
 
 // Not preview
 #else
@@ -137,6 +166,10 @@ void CustomLighting_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, 
     OUTPUT_SH(NormalWS, vertexSH);
 
     data.bakedGI = SAMPLE_GI(lightMapUV, vertexSH, NormalWS);
+
+    data.shadowMask = SAMPLE_SHADOWMASK(lightMapUV);
+
+    data.fogFactor = ComputeFogFactor(positionCS.z);
 #endif
 
     Color = CustomLighting(data);

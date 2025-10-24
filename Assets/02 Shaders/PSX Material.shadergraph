@@ -1538,8 +1538,8 @@
     "m_ObjectId": "3ba0787e28d146f48cccd116bc06c606",
     "m_Title": "Affine Texture Mapping",
     "m_Position": {
-        "x": -1696.999755859375,
-        "y": 453.99993896484377
+        "x": -1697.0001220703125,
+        "y": 454.0
     }
 }
 
@@ -3195,7 +3195,7 @@
     "m_ObjectId": "c02881edac0b4bb19d76b9d68767b3ab",
     "m_Title": "Vertex Snapping",
     "m_Position": {
-        "x": -1176.999755859375,
+        "x": -1177.0,
         "y": -597.0
     }
 }
@@ -3934,8 +3934,8 @@
     "m_ObjectId": "f5d9f0bc60e34a3d9b942cf829fbe0ed",
     "m_Title": "Tiling",
     "m_Position": {
-        "x": -654.9998779296875,
-        "y": 808.9998779296875
+        "x": -655.0,
+        "y": 809.0
     }
 }
 
