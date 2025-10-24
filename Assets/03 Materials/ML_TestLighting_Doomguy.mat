@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ML_Road
-  m_Shader: {fileID: -6465566751694194690, guid: cb9818ead73db5e46a21e4f8a89be68c, type: 3}
+  m_Name: ML_TestLighting_Doomguy
+  m_Shader: {fileID: -6465566751694194690, guid: 549a5be8d6afdcb4a8029ea52e17f243, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -25,18 +25,18 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 47c08f18a9cd9104c9c23d9d8286ce79, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicTex:
-        m_Texture: {fileID: 2800000, guid: 8b303bff3458c9f4db4a5b90971cd878, type: 3}
+        m_Texture: {fileID: 2800000, guid: 07d020040a2d2294ea07477158c1eb78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 8cf3fcec41db51f4baec9c05ad1e21b6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 32fa06aa6055f58409171a792f7232f6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ToonLighting_23475576e17242609fb1318036ebc01e_LightGradientTexture_3691659410_Texture2D:
+    - _ToonLighting_90b0eaa99d4245db9663c204d1ae221c_LightGradientTexture_3691659410_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 901d27ccd42ef34498122fdcd37a17b6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Toon_Texture_Ramp:
         m_Texture: {fileID: 2800000, guid: f2a60e3de453663449eab764439f6b58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -54,19 +54,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Affine_Amount: 0.5
-    - _Affine_Texture_Mapping: 0
+    - _AmbientOcclusion: 1
+    - _Normal_Strength: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.1
-    - _Tiling: 1
-    - _UseNormalTexture: 1
-    - _Use_Normal_Texture: 0
-    - _Vertex_Snapping_Amount: 1
+    - _Smoothness: 0.722
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &4130524438423749004
+--- !u!114 &791384227629537128
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

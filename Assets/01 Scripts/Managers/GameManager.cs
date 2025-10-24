@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
 
         dither = true;
         Shader.SetGlobalInteger("_Dither", dither ? 1 : 0);
+
+        colorQuantization = true;
+        Shader.SetGlobalInteger("_Color_Quantization", colorQuantization ? 1 : 0);
     }
 
     /// <summary>

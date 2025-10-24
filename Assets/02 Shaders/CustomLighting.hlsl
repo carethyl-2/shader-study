@@ -18,6 +18,18 @@
     #endif
 #endif
 
+struct EdgeConstants
+{
+    float diffuse;
+    float specular;
+    float specularOffset;
+    float distanceAttenuation;
+    float shadowAttenuation;
+    float rim;
+    float rimOffset;
+    float rimThreshold;
+};
+
 struct CustomLightingData
 {
     // Position and Orientation
@@ -30,6 +42,10 @@ struct CustomLightingData
     float3 albedo;
     float smoothness;
     float ambientOcclusion;
+    float shininess;
+
+    // Lighting
+    EdgeConstants ec;
 
     // Baked Lighting
     float3 bakedGI;
@@ -59,20 +75,34 @@ float3 CustomGlobalIllumination(CustomLightingData _data)
 
 float3 CustomLightHandling(CustomLightingData _data, Light _light)
 {
-    // Light base color
-    float3 radiance = _light.color * (_light.distanceAttenuation * _light.shadowAttenuation);
-
+    // Attenuation
+    float shadowAttenuationSmoothStepped = smoothstep(0.0, _data.ec.shadowAttenuation, _light.shadowAttenuation);
+    float distanceAttenuationSmoothStepped = smoothstep(0.0, _data.ec.distanceAttenuation, _light.distanceAttenuation);
+    float attenuation = shadowAttenuationSmoothStepped * distanceAttenuationSmoothStepped;    
+    
     // Diffuse
     float diffuse = saturate(dot(_data.normalWorldSpace, _light.direction));
-
+    diffuse *= attenuation;
+    
     // Specular
-    float specularDot = saturate(dot(_data.normalWorldSpace, normalize(_light.direction + _data.viewDirectionWorldSpace)));
-    float specular = pow(specularDot, GetSmoothnessPower(_data.smoothness))* diffuse;
+    float specularHalfway = normalize(_light.direction + _data.viewDirectionWorldSpace);
+    float specular = saturate(dot(_data.normalWorldSpace, specularHalfway));
+    specular = pow(specular, _data.shininess);
+    specular *= diffuse * _data.smoothness;
 
+        
+    // Rimlight
+    float rim = 1 - dot(_data.viewDirectionWorldSpace, _data.normalWorldSpace);
+    rim *= pow(diffuse, _data.ec.rimThreshold);
 
+            
+    // Smoothstep components
+    diffuse = smoothstep(0, _data.ec.diffuse, diffuse);
+    specular = _data.smoothness * smoothstep((1 - _data.smoothness) * _data.ec.specular + _data.ec.specularOffset, _data.ec.specular + _data.ec.specularOffset, specular);
+    rim = _data.smoothness * smoothstep(_data.ec.rim - 0.5 * _data.ec.rimOffset, _data.ec.rim + 0.5 * _data.ec.rimOffset, rim);
+        
     // Combined light outputs
-    float3 color = _data.albedo * radiance * (diffuse + specular);
-    return color;
+    return _light.color * (diffuse + max(specular, rim));
 }
 #endif
 
@@ -106,6 +136,7 @@ float3 CustomLighting(CustomLightingData _data)
     uint numAdditionalLights = GetAdditionalLightsCount();
     
     #if USE_CLUSTER_LIGHT_LOOP
+    
         InputData inputData = (InputData)0;
         inputData.positionWS = _data.positionWorldSpace;
         
@@ -122,7 +153,8 @@ float3 CustomLighting(CustomLightingData _data)
             color += CustomLightHandling(_data, light);
         }
     #endif
-
+ 
+    
     color = MixFog(color, _data.fogFactor);
 
     // Return final color
@@ -130,7 +162,9 @@ float3 CustomLighting(CustomLightingData _data)
 #endif
 }
 
-void CustomLighting_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 Albedo, float Smoothness, float AmbientOcclusion, float2 LightMapUV, out float3 Color)
+void CustomLighting_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, float3 Albedo, float Smoothness, float AmbientOcclusion, 
+    float2 LightMapUV, float RimThreshold, float EdgeDiffuse, float EdgeSpecular, float EdgeSpecularOffset, float EdgeDistanceAttenuation,
+    float EdgeShadowAttenuation, float EdgeRim, float EdgeRimOffset, out float3 Color)
 {
     CustomLightingData data;
 
@@ -140,6 +174,20 @@ void CustomLighting_float(float3 PositionWS, float3 NormalWS, float3 ViewDirWS, 
     data.albedo = Albedo;
     data.smoothness = Smoothness;
     data.ambientOcclusion = AmbientOcclusion;
+
+    data.shininess = GetSmoothnessPower(data.smoothness);
+
+    EdgeConstants ec;
+    ec.diffuse = EdgeDiffuse;
+    ec.specular = EdgeSpecular;
+    ec.specularOffset = EdgeSpecularOffset;
+    ec.distanceAttenuation = EdgeDistanceAttenuation;
+    ec.shadowAttenuation = EdgeShadowAttenuation;
+    ec.rim = EdgeRim;
+    ec.rimOffset = EdgeRimOffset;
+    ec.rimThreshold = RimThreshold;
+
+    data.ec = ec;
 
 // Preview
 #ifdef SHADERGRAPH_PREVIEW
