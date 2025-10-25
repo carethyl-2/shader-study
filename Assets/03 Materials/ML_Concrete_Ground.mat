@@ -29,11 +29,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1a02ad3a27c487e449ccdc8cb0ab9e16, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c876635ecdb5f7b4ea73d2e85e062b7a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ToonLighting_23475576e17242609fb1318036ebc01e_LightGradientTexture_3691659410_Texture2D:
@@ -61,7 +61,7 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 0.5
     - _Tiling: 0.1
-    - _Use_Normal_Texture: 0
+    - _Use_Normal_Texture: 1
     - _Vertex_Snapping_Amount: 1
     m_Colors: []
   m_BuildTextureStacks: []

@@ -9,8 +9,10 @@ public class CameraController : MonoBehaviour
     public float m_pitch = 0.0f;
     
     public float m_maxPitch = 89.0f;
-    
+
     public float m_sensitivity = 1f;
+
+    [SerializeField] Light flashlight;
 
     [Header("Interactable Raycast")]
     [SerializeField] bool m_interaction = true;
@@ -46,6 +48,8 @@ public class CameraController : MonoBehaviour
         // Interaction
         InteractableCheck();
         if (Input.GetKeyDown(KeyCode.E)) { Interact(); }
+
+        if (Input.GetKeyDown(KeyCode.F)) { flashlight.enabled = !flashlight.enabled; }
 
 
 

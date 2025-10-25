@@ -62,7 +62,7 @@ Material:
     - _Smoothness: 0.1
     - _Tiling: 0.1
     - _UseNormalTexture: 1
-    - _Use_Normal_Texture: 0
+    - _Use_Normal_Texture: 1
     - _Vertex_Snapping_Amount: 1
     m_Colors: []
   m_BuildTextureStacks: []
