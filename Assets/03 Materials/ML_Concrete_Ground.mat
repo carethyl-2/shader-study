@@ -56,10 +56,11 @@ Material:
     m_Floats:
     - _Affine_Amount: 1
     - _Affine_Texture_Mapping: 0
+    - _Ambient_Occlusion: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.5
-    - _Tiling: 1
+    - _Tiling: 0.1
     - _Use_Normal_Texture: 0
     - _Vertex_Snapping_Amount: 1
     m_Colors: []

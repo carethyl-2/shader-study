@@ -8,18 +8,20 @@ public class CameraController : MonoBehaviour
     
     public float m_pitch = 0.0f;
     
-    public float m_minPitch = -89.0f;
     public float m_maxPitch = 89.0f;
-
-    public float m_verticalSensitivity = 5f;
-    public float m_horizontalSensitivity = 5.0f;
+    
+    public float m_sensitivity = 1f;
 
     [Header("Interactable Raycast")]
+    [SerializeField] bool m_interaction = true;
     [SerializeField] float m_interactionRange = 3.0f;
     public bool m_canInteract = true;
     [SerializeField] IInteractable m_focusedInteractable;
 
     public bool rotateCamera = true;
+
+    Vector2 m_rawMouseInput = Vector2.zero;
+    Vector2 m_smoothedMouseInput = Vector2.zero;
 
     private void Awake()
     {
@@ -29,9 +31,8 @@ public class CameraController : MonoBehaviour
 
     public void ToggleCameraRotation()
     {
-        Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
-
         rotateCamera = !rotateCamera;
+        Cursor.lockState = rotateCamera ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     void Update()
@@ -41,22 +42,39 @@ public class CameraController : MonoBehaviour
             ToggleCameraRotation();
         }
 
-        
+
         // Interaction
         InteractableCheck();
         if (Input.GetKeyDown(KeyCode.E)) { Interact(); }
 
-        if (!rotateCamera) { return; }
-        Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y"));
 
 
-        m_pitch += mouseInput.y * m_verticalSensitivity;
-        m_pitch = Mathf.Clamp(m_pitch, m_minPitch, m_maxPitch);
+        m_smoothedMouseInput = Vector2.Lerp(m_smoothedMouseInput, m_rawMouseInput, Time.deltaTime * 10.0f);
+
+        if (!rotateCamera)
+        {
+            m_rawMouseInput = Vector2.zero;
+            return;
+        }
+        
+        m_rawMouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+  
+    }
+
+    void LateUpdate()
+    {
+        Vector2 input = m_smoothedMouseInput;
+        input *= m_sensitivity;
+
+        m_pitch -= input.y;
+        m_pitch = Mathf.Clamp(m_pitch, -m_maxPitch, m_maxPitch);
         
         transform.localRotation = Quaternion.Euler(m_pitch, transform.localRotation.y, transform.localRotation.z);
 
-        Vector3 newAngles = m_playerController.transform.localRotation.eulerAngles + Vector3.up * (mouseInput.x * m_horizontalSensitivity);
-        m_playerController.m_rigidbody.MoveRotation(Quaternion.Euler(newAngles));
+        //Vector3 newAngles = m_playerController.transform.localRotation.eulerAngles + Vector3.up * m_mouseInput.x;
+        //m_playerController.m_rigidbody.MoveRotation(Quaternion.Euler(newAngles));
+
+        m_playerController.transform.Rotate(new Vector3(0.0f, input.x, 0.0f));
     }
 
     /// <summary>  
@@ -64,6 +82,8 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void Interact()
     {
+        if (!m_interaction) { return; }
+
         // If cannot interact, do nothing
         if (!m_canInteract) { return; }
 
@@ -89,6 +109,8 @@ public class CameraController : MonoBehaviour
             // And do nothing
             return;
         }
+
+        if (!m_interaction) { return; }
 
         // Draw interact ray
         Debug.DrawRay(transform.position, transform.forward * m_interactionRange, Color.red);

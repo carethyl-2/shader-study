@@ -681,12 +681,24 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": 0.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
-    }
+    },
+    "m_SliderType": 0,
+    "m_SliderPower": 3.0,
+    "m_EnumType": 0,
+    "m_CSharpEnumString": "",
+    "m_EnumNames": [
+        "Default"
+    ],
+    "m_EnumValues": [
+        0
+    ]
 }
 
 {
@@ -803,8 +815,8 @@
     "m_ObjectId": "2e0bff40cfd24a74b8495c6038d9b4a4",
     "m_Title": "Lerp remapped colour",
     "m_Position": {
-        "x": 254.0,
-        "y": -93.99993896484375
+        "x": 254.00001525878907,
+        "y": -93.99998474121094
     }
 }
 
@@ -1060,7 +1072,7 @@
     "m_Title": "Possible Input colors",
     "m_Position": {
         "x": -2311.0,
-        "y": -46.0
+        "y": -45.999961853027347
     }
 }
 
@@ -1071,7 +1083,7 @@
     "m_Title": "Convert to Input color range",
     "m_Position": {
         "x": -1420.0,
-        "y": -100.00001525878906
+        "y": -99.99996948242188
     }
 }
 
@@ -1458,8 +1470,8 @@
     "m_ObjectId": "889f413245e54a7d89478b6e2b1c3cf3",
     "m_Title": "Quantize Color",
     "m_Position": {
-        "x": -668.0,
-        "y": -59.0
+        "x": -668.0000610351563,
+        "y": -58.99996566772461
     }
 }
 
@@ -1676,6 +1688,8 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -1858,12 +1872,24 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": 5.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
-    }
+    },
+    "m_SliderType": 0,
+    "m_SliderPower": 3.0,
+    "m_EnumType": 0,
+    "m_CSharpEnumString": "",
+    "m_EnumNames": [
+        "Default"
+    ],
+    "m_EnumValues": [
+        0
+    ]
 }
 
 {
@@ -2247,7 +2273,7 @@
     "m_Title": "Possible Output colors",
     "m_Position": {
         "x": -2244.0,
-        "y": 275.0
+        "y": 274.9999694824219
     }
 }
 
@@ -2314,12 +2340,24 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
     "m_Value": 8.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
-    }
+    },
+    "m_SliderType": 0,
+    "m_SliderPower": 3.0,
+    "m_EnumType": 0,
+    "m_CSharpEnumString": "",
+    "m_EnumNames": [
+        "Default"
+    ],
+    "m_EnumValues": [
+        0
+    ]
 }
 
 {
@@ -2462,8 +2500,8 @@
     "m_ObjectId": "f5859b0a70704c648c36f63c22f6146f",
     "m_Title": "Remap to Output color range",
     "m_Position": {
-        "x": -354.0,
-        "y": -55.0000114440918
+        "x": -354.0000305175781,
+        "y": -54.99997329711914
     }
 }
 

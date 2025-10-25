@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // Default shader options
 
         // Enable snap vertices
         snapVertices = true;
@@ -63,6 +64,11 @@ public class GameManager : MonoBehaviour
 
         colorQuantization = true;
         Shader.SetGlobalInteger("_Color_Quantization", colorQuantization ? 1 : 0);
+
+        Shader.SetGlobalFloat("_Color_Quantization_Amount", 1.0f);
+        Shader.SetGlobalFloat("_Dither_Amount", 0.25f);
+        Shader.SetGlobalFloat("_Vertex_Snapping_Amount", 1.0f);
+        Shader.SetGlobalFloat("_Affine_Amount", 1.0f);
     }
 
     /// <summary>
@@ -71,47 +77,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Toggle graphics menu
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             graphicsMenuUIObject.SetActive(!graphicsMenuUIObject.activeSelf);
             CameraController.Instance.ToggleCameraRotation();
         }
-
-        /*
-        // Toggle low resolution
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ToggleLowResolution();
-        }
-
-        // Toggle Vertex Snapping
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            snapVertices = !snapVertices;
-            ToggleSnapVertices(snapVertices);
-        }
-
-        // Toggle AFM
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            affineTextureMapping = !affineTextureMapping;
-            ToggleAffineTextureMapping(affineTextureMapping);
-        }
-
-        // Toggle Dithering
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            dither = !dither;
-            ToggleDither(dither);
-        }
-
-        // Toggle Color Quantization
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            colorQuantization = !colorQuantization;
-            ToggleColorQuantization(colorQuantization);
-        }
-        */
     }
 
     public void ToggleLowResolution()
@@ -142,7 +112,6 @@ public class GameManager : MonoBehaviour
 
         Shader.SetGlobalInteger("_Snap_Vertices", snapVertices ? 1 : 0);
 
-        Debug.Log("Set Snap Vertices: " + snapVertices);
         TextPrompt.Instance.SetTextPrompt("Vertex Snapping: " + (snapVertices ? "Enabled" : "Disabled"));
     }
 
@@ -152,8 +121,6 @@ public class GameManager : MonoBehaviour
         affineTextureMapping = !affineTextureMapping;
 
         Shader.SetGlobalInteger("_Affine_Texture_Mapping", affineTextureMapping ? 1 : 0);
-
-        Debug.Log("Set Affine Texture Mapping: " + affineTextureMapping);
         TextPrompt.Instance.SetTextPrompt("Affine Texture Mapping: " + (affineTextureMapping ? "Enabled" : "Disabled"));
     }
 
@@ -163,7 +130,6 @@ public class GameManager : MonoBehaviour
 
         Shader.SetGlobalInteger("_Dither", dither ? 1 : 0);
 
-        Debug.Log("Set Dither: " + dither);
         TextPrompt.Instance.SetTextPrompt("Dither: " + (dither ? "Enabled" : "Disabled"));
     }
 
@@ -173,7 +139,6 @@ public class GameManager : MonoBehaviour
 
         Shader.SetGlobalInteger("_Color_Quantization", colorQuantization ? 1 : 0);
 
-        Debug.Log("Set Color Quantization: " + colorQuantization);
         TextPrompt.Instance.SetTextPrompt("Color Quantization: " + (colorQuantization ? "Enabled" : "Disabled"));
     }
 
@@ -199,7 +164,7 @@ public class GameManager : MonoBehaviour
     {
         Camera.main.fieldOfView = _fov;
     }
-    
+
     IEnumerator TakeScreenshotRoutine()
     {
         graphicsMenuUIObject.SetActive(false);
@@ -211,5 +176,17 @@ public class GameManager : MonoBehaviour
         graphicsMenuUIObject.SetActive(true);
 
         TextPrompt.Instance.SetTextPrompt("'" + screenshotSaveString + "' Saved to disk...");
+    }
+
+    public void SetDitherAmount(float _amount)
+    {
+        Shader.SetGlobalFloat("_Dither_Amount", _amount);
+        TextPrompt.Instance.SetTextPrompt("Dither Amount: " + _amount.ToString("F2"));
+    }
+
+    public void SetColorQuantizationAmount(float _amount)
+    {
+        Shader.SetGlobalFloat("_Color_Quantization_Amount", _amount);
+        TextPrompt.Instance.SetTextPrompt("Color Quantization Amount: " + _amount.ToString("F2"));
     }
 }
