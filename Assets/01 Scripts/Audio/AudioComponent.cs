@@ -18,6 +18,7 @@ public class AudioComponent : MonoBehaviour
     [SerializeField] float m_pitch = 1.0f;
     [SerializeField] float m_randomPitchOffset = 0.15f;
     [SerializeField] bool m_playOnStart = false;
+    [SerializeField] bool m_2DSound = false;
     public bool m_loopSound = false;
 
     int selectedIndex;
@@ -76,6 +77,6 @@ public class AudioComponent : MonoBehaviour
 
         // Create sound player obejct and play sound
         GameObject audioPlayerObject = Instantiate(GameManager.Instance.audioPlayerPrefab, transform.position, transform.rotation);
-        audioPlayerObject.GetComponent<AudioPlayer>().PlaySound(selectedClip, selectedPitch, selectedVolume, selectedIndex, this);
+        audioPlayerObject.GetComponent<AudioPlayer>().PlaySound(selectedClip, selectedPitch, selectedVolume, selectedIndex, m_2DSound, this);
     }
 }

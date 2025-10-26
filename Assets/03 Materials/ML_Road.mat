@@ -59,7 +59,7 @@ Material:
     - _Ambient_Occlusion: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.1
+    - _Smoothness: 1
     - _Tiling: 0.1
     - _UseNormalTexture: 1
     - _Use_Normal_Texture: 1

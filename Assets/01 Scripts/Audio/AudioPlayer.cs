@@ -7,12 +7,15 @@ public class AudioPlayer : MonoBehaviour
     AudioSource AudioSource;
     int index;
 
-    public void PlaySound(AudioClip _clip, float _pitch, float _volume, int _index, AudioComponent _owner)
+    public void PlaySound(AudioClip _clip, float _pitch, float _volume, int _index, bool _2DSound, AudioComponent _owner)
     {
         AudioSource = GetComponent<AudioSource>();
         AudioSource.clip = _clip;
         AudioSource.pitch = _pitch;
         AudioSource.volume = _volume;
+
+        if (_2DSound) AudioSource.spatialBlend = 0.0f;
+
         AudioSource.Play();
 
         OwnerComponent = _owner;
