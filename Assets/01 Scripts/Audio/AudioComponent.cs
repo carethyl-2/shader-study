@@ -15,6 +15,7 @@ using UnityEngine;
 public class AudioComponent : MonoBehaviour
 {
     [SerializeField] AudioClip[] m_audioClips;
+    [SerializeField] float m_volume = 1.0f;
     [SerializeField] float m_pitch = 1.0f;
     [SerializeField] float m_randomPitchOffset = 0.15f;
     [SerializeField] bool m_playOnStart = false;
@@ -71,12 +72,9 @@ public class AudioComponent : MonoBehaviour
 
         // Set random pitch
         selectedPitch = m_pitch + Random.Range(-m_randomPitchOffset, m_randomPitchOffset);
-
-        // Select volume
-        selectedVolume = 1.0f;
-
+        
         // Create sound player obejct and play sound
         GameObject audioPlayerObject = Instantiate(GameManager.Instance.audioPlayerPrefab, transform.position, transform.rotation);
-        audioPlayerObject.GetComponent<AudioPlayer>().PlaySound(selectedClip, selectedPitch, selectedVolume, selectedIndex, m_2DSound, this);
+        audioPlayerObject.GetComponent<AudioPlayer>().PlaySound(selectedClip, selectedPitch, m_volume, selectedIndex, m_2DSound, this);
     }
 }

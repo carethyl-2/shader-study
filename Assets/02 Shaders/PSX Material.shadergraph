@@ -1680,7 +1680,7 @@
     "m_ObjectId": "3ba0787e28d146f48cccd116bc06c606",
     "m_Title": "Affine Texture Mapping",
     "m_Position": {
-        "x": -1697.0,
+        "x": -1696.9998779296875,
         "y": 454.0000305175781
     }
 }
@@ -3375,7 +3375,7 @@
     "m_ObjectId": "c02881edac0b4bb19d76b9d68767b3ab",
     "m_Title": "Vertex Snapping",
     "m_Position": {
-        "x": -1177.0,
+        "x": -1176.9998779296875,
         "y": -597.0
     }
 }
